@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    internal class Bottle
+    public class Bottle
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -14,5 +14,7 @@ namespace Models
         public string Appellation { get; set; }
         public int Vintage { get; set; }
         public int Location { get; set; }
+        public int DrawerId { get; set; }
+        public Drawer Drawer { get; set; }
     }
 }

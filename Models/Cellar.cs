@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    internal class Cellar
+    public class Cellar
     {
         public int Id { get; set; }
-        public string Designation { get; set; }
+        public string? Designation { get; set; }
+        public int UserId { get; set; }
+        public required User User { get; set; }
+        public List<Drawer> Drawers { get; set; }
     }
 }
