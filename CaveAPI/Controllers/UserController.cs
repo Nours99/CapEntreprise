@@ -17,7 +17,7 @@ namespace CaveAPI.Controllers
         [HttpGet]
         public ActionResult Index() 
         {
-            var users = context.Users.ToList(); // REPOSITORY
+            var users = _userRepository.GetUsers(); // REPOSITORY
             return Ok(users);
         }
     }

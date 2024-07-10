@@ -15,7 +15,7 @@ namespace Dal
         {
         }
 
-        public CellarContext() :base()0
+        public CellarContext() :base()
         {
         }
 
