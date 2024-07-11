@@ -82,5 +82,21 @@ namespace Dal.Repository
                     .SetProperty(u => u.PhoneNumber, user.PhoneNumber)
                 );
         }
+
+        //async Task<User> IUserRepository.GetUserWithBottlesAsync(int id)
+        //{
+        //    return await context.Users
+        //        .Include(u => u.Cellars)
+        //        .ThenInclude(c => c.Drawers)
+        //        .ThenInclude(d => d.Bottles)
+        //        .FirstOrDefaultAsync(u => u.Id == id);
+        //}
+
+        //async Task<User> IUserRepository.GetUserWithCellarsAsync(int id)
+        //{
+        //    return await context.Users
+        //        .Include(u => u.Cellars)
+        //        .FirstOrDefaultAsync(u => u.Id == id);
+        //}
     }
 }
