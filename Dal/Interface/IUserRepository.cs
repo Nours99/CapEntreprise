@@ -13,9 +13,9 @@ namespace Dal.Interface
         Task<User> GetUserByIDAsync(int id);
         Task<User> GetUserByUsernameAsync(string username);
         Task<User> GetUserByEmailAsync(string email);
-        void CreateUserAsync(User user);
-        void UpdateUserAsync(User user);
-        void DeleteUserAsync(int id);
+        Task CreateUserAsync(User user);
+        Task UpdateUserAsync(User user);
+        Task DeleteUserAsync(int id);
         
     }
 }
