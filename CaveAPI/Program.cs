@@ -1,5 +1,7 @@
 
 using Dal;
+using Dal.Interface;
+using Dal.Repository;
 using Microsoft.EntityFrameworkCore;
 
 namespace CaveAPI
@@ -15,6 +17,9 @@ namespace CaveAPI
             builder.Services.AddDbContext<CellarContext>(options =>
                 options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=WineCellarDB;Trusted_Connection=True")
             );
+
+            // Add repositories - injection dependance
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
