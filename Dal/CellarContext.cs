@@ -11,7 +11,7 @@ namespace Dal
         public DbSet<Drawer> Drawers { get; set; }
         public DbSet<Bottle> Bottles { get; set; }
 
-        public CellarContext(DbContextOptions options) : base(options)
+        public CellarContext(DbContextOptions<CellarContext> options) : base(options)
         {
         }
 
