@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Dal.Interface;
+﻿using Dal.Interface;
 using Microsoft.EntityFrameworkCore;
 using Models;
 
@@ -27,7 +22,6 @@ namespace Dal.Repository
         // Get a user by his ID
         public async Task<User> GetUserByIDAsync(int id)
         {
-
             if (id > 0)
             {
                 try
@@ -67,13 +61,26 @@ namespace Dal.Repository
         //Delete a user
         public async Task DeleteUserAsync(int id)
         {
-            throw new NotImplementedException();
+            //ancienne méthode
+            //context.Users.Remove(await GetUserByIDAsync(id));
+            //await context.SaveChangesAsync();
+
+            await context.Users.Where(u => u.Id == id).ExecuteDeleteAsync();
         }
 
         //Update a user
-        public void UpdateUserAsync(User user)
+        public async Task UpdateUserAsync(User user)
         {
-            throw new NotImplementedException();
+            await context.Users
+                .Where(u => u.Id == user.Id)
+                .ExecuteUpdateAsync(update => update
+                    .SetProperty(u => u.Username, user.Username)
+                    .SetProperty(u => u.Email, user.Email)
+                    .SetProperty(u => u.FirstName, user.FirstName)
+                    .SetProperty(u => u.LastName, user.LastName)
+                    .SetProperty(u => u.Birthday, user.Birthday)
+                    .SetProperty(u => u.PhoneNumber, user.PhoneNumber)
+                );
         }
     }
 }
