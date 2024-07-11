@@ -11,7 +11,7 @@ namespace Models
 
         [Required]
         [StringLength(15)]
-        public required string UserName { get; set; }
+        public required string Username { get; set; }
 
         [Required]
         [StringLength(50)]
