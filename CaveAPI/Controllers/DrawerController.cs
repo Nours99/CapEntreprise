@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Dal.Interface;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CaveAPI.Controllers
@@ -7,5 +8,10 @@ namespace CaveAPI.Controllers
     [ApiController]
     public class DrawerController : ControllerBase
     {
+        readonly IDrawerRepository _drawerRepository;
+        public DrawerController(IDrawerRepository drawerRepository)
+        {
+            _drawerRepository = drawerRepository;
+        }
     }
 }
