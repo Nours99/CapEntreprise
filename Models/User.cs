@@ -22,7 +22,7 @@ namespace Models
         public required string LastName { get; set; }
 
         [Required]
-        public required DateOnly Birthday { get; set; }
+        public required String Birthday { get; set; }
 
         public string? Email { get; set; }
 

@@ -61,7 +61,7 @@ namespace Dal.Repository
         //Delete a user
         public async Task DeleteUserAsync(int id)
         {
-            //ancienne méthode
+            ////ancienne méthode
             //context.Users.Remove(await GetUserByIDAsync(id));
             //await context.SaveChangesAsync();
 
@@ -83,20 +83,14 @@ namespace Dal.Repository
                 );
         }
 
-        //async Task<User> IUserRepository.GetUserWithBottlesAsync(int id)
-        //{
-        //    return await context.Users
-        //        .Include(u => u.Cellars)
-        //        .ThenInclude(c => c.Drawers)
-        //        .ThenInclude(d => d.Bottles)
-        //        .FirstOrDefaultAsync(u => u.Id == id);
-        //}
+        async Task<User> IUserRepository.GetUserWithBottlesAsync(int id)
+        {
+            throw new NotImplementedException();  
+        }
 
-        //async Task<User> IUserRepository.GetUserWithCellarsAsync(int id)
-        //{
-        //    return await context.Users
-        //        .Include(u => u.Cellars)
-        //        .FirstOrDefaultAsync(u => u.Id == id);
-        //}
+        async Task<User> IUserRepository.GetUserWithCellarsAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
