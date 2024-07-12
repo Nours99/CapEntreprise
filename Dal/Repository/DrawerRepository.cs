@@ -1,5 +1,6 @@
 ﻿using Dal.Interface;
 using Models;
+using Microsoft.EntityFrameworkCore;
 
 
 
@@ -10,8 +11,9 @@ public class DrawerRepository : IDrawerRepository
 {
     //CellarContext classe qui représente le contexte de la Bdd
     private readonly CellarContext context;
-    public DrawerRepository(CellarContext drawerContext) 
+    public DrawerRepository(CellarContext Context) 
     { 
+        this.context = Context;
     }
 
     public Task CreateDrawerAsync(Drawer drawer)
