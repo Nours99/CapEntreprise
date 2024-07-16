@@ -14,6 +14,7 @@ namespace CaveAPI.Controllers
         {
             _userRepository = userRepository;
         }
+
         [HttpGet]
         public ActionResult Index() 
         {

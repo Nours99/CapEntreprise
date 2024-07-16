@@ -9,7 +9,7 @@ namespace Dal
         public DbSet<User> Users { get; set; }
         public DbSet<Cellar> Cellars { get; set; }
         public DbSet<Drawer> Drawers { get; set; }
-        public DbSet<Bottle> Bottles { get; set; }
+        public DbSet<Bottle> Bottle { get; set; }
 
         public CellarContext(DbContextOptions<CellarContext> options) : base(options)
         {
