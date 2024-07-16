@@ -2,6 +2,7 @@ using Dal;
 using Dal.Interface;
 using Dal.Repository;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
 namespace CaveAPI
 {
@@ -16,6 +17,7 @@ namespace CaveAPI
             builder.Services.AddDbContext<CellarContext>(options =>
                 options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=WineCellarDB;Trusted_Connection=True")
             );
+            builder.Services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
             // Add repositories - injection dependance
             builder.Services.AddScoped<IUserRepository, UserRepository>();

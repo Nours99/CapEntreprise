@@ -42,6 +42,13 @@ namespace CaveAPI.Controllers
             return Ok(user);
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetUserWithBottles(int id)
+        {
+            var bottles = await this.repository.GetUserWithBottlesAsync(id);
+            return Ok(bottles);
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateUser([FromBody] User user)
         {

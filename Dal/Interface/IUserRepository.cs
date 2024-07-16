@@ -11,7 +11,7 @@ namespace Dal.Interface
         Task CreateUserAsync(User user);
         Task UpdateUserAsync(User user);
         Task DeleteUserAsync(int id);
-        Task<User> GetUserWithBottlesAsync(int id);
+        Task<List<Bottle>> GetUserWithBottlesAsync(int id);
         Task<User> GetUserWithCellarsAsync(int id);
         
     }

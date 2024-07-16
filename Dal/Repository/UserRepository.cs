@@ -83,12 +83,16 @@ namespace Dal.Repository
                 );
         }
 
-        async Task<User> IUserRepository.GetUserWithBottlesAsync(int id)
+        public async Task<List<Bottle>> GetUserWithBottlesAsync(int id)
         {
-            throw new NotImplementedException();  
+            return await context.Bottles
+                .Include(b => b.Drawer)
+                .ThenInclude(d => d.Cellar)
+                .ThenInclude(c => c.User)
+                .Where(b => b.Drawer.Cellar.User.Id == id).ToListAsync();
         }
 
-        async Task<User> IUserRepository.GetUserWithCellarsAsync(int id)
+        public async Task<User> GetUserWithCellarsAsync(int id)
         {
             throw new NotImplementedException();
         }
