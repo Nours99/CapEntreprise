@@ -1,6 +1,7 @@
 ﻿using Dal.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Models;
+using Models.DTOs.User;
 
 namespace CaveAPI.Controllers
 {
@@ -17,36 +18,98 @@ namespace CaveAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var users = await this.repository.GetUsersAsync(); // REPOSITORY
-            return Ok(users);
+            var users = await this.repository.GetUsersAsync();
+            List<GetUserDTO> usersDTO = new();
+
+            foreach (User user in users)
+            {
+                usersDTO
+                    .Add(new GetUserDTO
+                    {
+                        Id = user.Id,
+                        Username = user.Username,
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        Email = user.Email,
+                        Birthday = user.Birthday,
+                        PhoneNumber = user.PhoneNumber
+                    });
+            }
+
+            return Ok(usersDTO);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByID([FromRoute] int id)
         {
             var user = await this.repository.GetUserByIDAsync(id);
-            return Ok(user);
+
+            GetUserDTO userDTO = new() { 
+                Id = user.Id,
+                Username= user.Username,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                Birthday = user.Birthday,
+                PhoneNumber = user.PhoneNumber
+            };
+            return Ok(userDTO);
         }
 
         [HttpGet("{username}")]
         public async Task<IActionResult> GetByUsername([FromRoute] string username)
         {
             var user = await this.repository.GetUserByUsernameAsync(username);
-            return Ok(user);
+
+            GetUserDTO userDTO = new()
+            {
+                Id = user.Id,
+                Username = user.Username,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                Birthday = user.Birthday,
+                PhoneNumber = user.PhoneNumber
+            };
+            return Ok(userDTO);
         }
 
         [HttpGet("{email}")]
         public async Task<IActionResult> GetByEmail([FromRoute] string email)
         {
             var user = await this.repository.GetUserByEmailAsync(email);
-            return Ok(user);
+
+            GetUserDTO userDTO = new()
+            {
+                Id = user.Id,
+                Username = user.Username,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                Birthday = user.Birthday,
+                PhoneNumber = user.PhoneNumber
+            };
+            return Ok(userDTO);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUserWithBottles(int id)
         {
             var bottles = await this.repository.GetUserWithBottlesAsync(id);
-            return Ok(bottles);
+            var user = await this.repository.GetUserByIDAsync(id);
+
+            GetUserDTO userDTO = new()
+            {
+                Id = user.Id,
+                Username = user.Username,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                Birthday = user.Birthday,
+                PhoneNumber = user.PhoneNumber,
+                Bottles = bottles
+            };
+            return Ok(userDTO);
         }
 
         [HttpPost]
