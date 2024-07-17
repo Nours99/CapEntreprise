@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Models.DTOs.Bottles;
 
-namespace Models.DTOs.User
+namespace Models.DTOs.Users
 {
-    public class GetUserDTO
+    public class UserGetDTO
     {
         public int Id { get; set; }
 
@@ -23,6 +18,6 @@ namespace Models.DTOs.User
 
         public string? PhoneNumber { get; set; }
 
-        public List<Bottle>? Bottles { get; set; }
+        public List<BottleGetDTO>? Bottles { get; set; }
     }
 }

@@ -1,7 +1,8 @@
 ﻿using Dal.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Models;
-using Models.DTOs.User;
+using Models.DTOs.Bottles;
+using Models.DTOs.Users;
 
 namespace CaveAPI.Controllers
 {
@@ -19,12 +20,12 @@ namespace CaveAPI.Controllers
         public async Task<IActionResult> GetAll()
         {
             var users = await this.repository.GetUsersAsync();
-            List<GetUserDTO> usersDTO = new();
+            List<UserGetDTO> usersDTO = new();
 
             foreach (User user in users)
             {
                 usersDTO
-                    .Add(new GetUserDTO
+                    .Add(new UserGetDTO
                     {
                         Id = user.Id,
                         Username = user.Username,
@@ -44,15 +45,17 @@ namespace CaveAPI.Controllers
         {
             var user = await this.repository.GetUserByIDAsync(id);
 
-            GetUserDTO userDTO = new() { 
+            UserGetDTO userDTO = new()
+            {
                 Id = user.Id,
-                Username= user.Username,
+                Username = user.Username,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Email = user.Email,
                 Birthday = user.Birthday,
                 PhoneNumber = user.PhoneNumber
             };
+
             return Ok(userDTO);
         }
 
@@ -61,7 +64,7 @@ namespace CaveAPI.Controllers
         {
             var user = await this.repository.GetUserByUsernameAsync(username);
 
-            GetUserDTO userDTO = new()
+            UserGetDTO userDTO = new()
             {
                 Id = user.Id,
                 Username = user.Username,
@@ -71,6 +74,7 @@ namespace CaveAPI.Controllers
                 Birthday = user.Birthday,
                 PhoneNumber = user.PhoneNumber
             };
+
             return Ok(userDTO);
         }
 
@@ -79,7 +83,7 @@ namespace CaveAPI.Controllers
         {
             var user = await this.repository.GetUserByEmailAsync(email);
 
-            GetUserDTO userDTO = new()
+            UserGetDTO userDTO = new()
             {
                 Id = user.Id,
                 Username = user.Username,
@@ -89,48 +93,81 @@ namespace CaveAPI.Controllers
                 Birthday = user.Birthday,
                 PhoneNumber = user.PhoneNumber
             };
+
             return Ok(userDTO);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUserWithBottles(int id)
         {
-            var bottles = await this.repository.GetUserWithBottlesAsync(id);
-            var user = await this.repository.GetUserByIDAsync(id);
 
-            GetUserDTO userDTO = new()
+            var user = await this.repository.GetUserByIDAsync(id);
+            var bottles = await this.repository.GetUserWithBottlesAsync(id);
+            List<BottleGetDTO> bottlesDTO = new();
+
+            foreach (var bottle in bottles)
+            {
+                bottlesDTO
+                    .Add(new BottleGetDTO
+                    {
+                        Id = bottle.Id,
+                        Name = bottle.Name,
+                        Color = bottle.Color,
+                        Vintage = bottle.Vintage,
+                        Location = bottle.Location
+                    });
+            }
+
+            UserGetDTO userDTO = new()
             {
                 Id = user.Id,
                 Username = user.Username,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                Email = user.Email,
-                Birthday = user.Birthday,
-                PhoneNumber = user.PhoneNumber,
-                Bottles = bottles
+                Bottles = bottlesDTO
             };
+
             return Ok(userDTO);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateUser([FromBody] User user)
+        public async Task<IActionResult> CreateUser([FromBody] UserPostDTO userDTO)
         {
+            User user = new User()
+            {
+                Username = userDTO.Username,
+                FirstName = userDTO.FirstName,
+                LastName = userDTO.LastName,
+                Birthday = userDTO.Birthday,
+                Email = userDTO.Email,
+                PhoneNumber = userDTO.PhoneNumber
+            };
+
             await repository.CreateUserAsync(user);
-            return NoContent();
+            return Ok(user);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser([FromRoute] int id)
         {
             await repository.DeleteUserAsync(id);
-            return Ok(repository.GetUserByIDAsync(id));
+            return Ok();
         }
 
-        [HttpPut]
-        public async Task<IActionResult> UpdateUser([FromBody] User user)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateUser([FromRoute]int id, [FromBody] UserPostDTO userDTO)
         {
+            User user = await repository.GetUserByIDAsync(id);
+
+            user.Username = userDTO.Username;
+            user.FirstName = userDTO.FirstName;
+            user.LastName = userDTO.LastName;
+            user.Birthday = userDTO.Birthday;
+            user.Email = userDTO.Email;
+            user.PhoneNumber = userDTO.PhoneNumber;
+
             await repository.UpdateUserAsync(user);
-            return Ok(await repository.GetUserByIDAsync(user.Id));
+            return Ok(user);
         }
     }
 }
